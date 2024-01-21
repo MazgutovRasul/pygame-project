@@ -46,8 +46,8 @@ all_sprites = pygame.sprite.Group()
 player_sprites = pygame.sprite.Group()
 bullet_sprites = pygame.sprite.Group()
 
-player1_image = pygame.image.load("dino.png")
-player2_image = pygame.image.load("dino.png")
+player1_image = pygame.image.load("dino_up.png")
+player2_image = pygame.image.load("dino_up.png")
 
 player1 = Player(50, HEIGHT // 2 - 25, player1_image, 5, "right")
 player2 = Player(WIDTH - 100, HEIGHT // 2 - 25, player2_image, 5, "left")
