@@ -44,9 +44,10 @@ class Bullet(pygame.sprite.Sprite):
 
 
 class Obstacle(pygame.sprite.Sprite):
-    def __init__(self, x, y, image):
+    def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.transform.scale(image, (OBSTACLE_SIZE, OBSTACLE_SIZE))
+        self.image = pygame.Surface((OBSTACLE_SIZE, OBSTACLE_SIZE))
+        self.image.fill(RED)
         self.rect = self.image.get_rect(topleft=(x, y))
 
 
@@ -74,7 +75,7 @@ def create_obstacles(obstacles):
         for col_index, cell in enumerate(row):
             x, y = col_index * OBSTACLE_SIZE, row_index * OBSTACLE_SIZE
             if cell == '#':
-                obstacle = Obstacle(x, y, pygame.image.load("obstacles.jpg"))  # Замените "wall.png" на ваш файл с текстурой стены
+                obstacle = Obstacle(x, y)
                 all_sprites.add(obstacle)
                 obstacles_group.add(obstacle)
             elif cell == '@':
@@ -143,8 +144,8 @@ player1.rect.topleft = player1_start
 player2.rect.topleft = player2_start
 
 # Интервал появления аптечек
-HEALTH_PACK_INTERVAL_MIN = 30000  # 30 секунд
-HEALTH_PACK_INTERVAL_MAX = 45000  # 45 секунд
+HEALTH_PACK_INTERVAL_MIN = 30000
+HEALTH_PACK_INTERVAL_MAX = 30000
 next_health_pack_time = pygame.time.get_ticks() + random.randint(HEALTH_PACK_INTERVAL_MIN, HEALTH_PACK_INTERVAL_MAX)
 
 clock = pygame.time.Clock()
@@ -267,7 +268,8 @@ while True:
 
     for player, player_health in [(player1, player1_health), (player2, player2_health)]:
         pygame.draw.rect(screen, GREEN,
-                         (player.rect.x, player.rect.y - health_bar_offset, player_health / 100 * player.rect.width, health_bar_height))
+                         (player.rect.x, player.rect.y - health_bar_offset, player_health / 100 * player.rect.width,
+                          health_bar_height))
 
     if winner_text:
         text_rect = winner_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
